@@ -1,4 +1,14 @@
-<!-- TODO: include link to the working pen, fulfill the user stories, document how you use the methods and the state -->
+**Update**
+
+As it turned out, checking the user stories first might have benefited me a lot... It seems that the current structure of the project is unfit to fulfill all of them. Most of them actually.
+
+In the morning, I will judge on the feasibility of this task, and perhaps on the necessity of creating yet another random quote machine, this time around with boring text elements and less inventive markup.
+
+Certainly nothing is lost. It has been an extremely valuable experience in practicing React, SVG, API calls, to produce something neat.
+
+Link to the working pen right [here](https://codepen.io/borntofrappe/full/PBmzGL/).
+
+---
 
 To earn the **Front End Libraries** certification for the @freeCodeCamp curriculum, I build with this project a _Random Quote Machine_, using the **React.js** library and **SVG** syntax for the overall design of the page.
 
