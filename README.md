@@ -1,4 +1,8 @@
+<!-- TODO: include link to the working pen, fulfill the user stories, document how you use the methods and the state -->
+
 To earn the **Front End Libraries** certification for the @freeCodeCamp curriculum, I build with this project a _Random Quote Machine_, using the **React.js** library and **SVG** syntax for the overall design of the page.
+
+<!-- Link to the working pen right [here]() -->
 
 # Preface
 
