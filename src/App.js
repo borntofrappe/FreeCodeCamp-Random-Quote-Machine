@@ -10,56 +10,95 @@ in the single stateful component, include two components, to render
 1. a container for 'controls', with buttons to get a new quote & sharing the quote on twitter respectively
 */
 class App extends Component {
+  // in the state include the quote as an object with text and author properties
+  // the text and author fields are filled with a call to the quote API
+  // bind also the methods for the page's functionalities
   constructor(props) {
     super(props);
     this.state = {
       quote: {
-        text: 'Life is really simple, but we insist of making it complicated',
-        author: 'Confucius'
+        text: '',
+        author: ''
       }
     }
+    this.handleShareQuote = this.handleShareQuote.bind(this);
+    this.handleNewQuote = this.handleNewQuote.bind(this);
   }
 
-  /*
-  // in componentDidMount retrieve data from the API and trigger a re-rendering of the component
+  // define a function to include a new quote
+  handleNewQuote() {
+    /*
+    included to test the function
+    */
+    // let text = "Life is really simple, but we insist of making it complicated";
+    // let author = "Confucius";
+    // this.setState({
+    //   quote: {
+    //     text: text,
+    //     author: author
+    //   }
+    // });
+    
+    const URL = "https://talaikis.com/api/quotes/random/";
+
+    // create a request for the prescribed URL
+    let request = new Request(URL);
+
+    // fetch the return value from the request
+    // return value: the data
+    fetch(request)
+      // format the data to work with a JSON object
+      // argument: data
+      // return value: json object
+      .then((response) => {
+        return response.json();
+      })
+      // if the quote in the json object is less than 75 characters long, proceed to update the state with the obtained values
+      // else call the function once more to find a new quote (this may cause the application to stall momentarily as it loops through quotes to find one short enough)
+      .then((json) => {
+        if(json.quote.length>75) {
+          this.handleNewQuote();
+        }
+        else {
+          this.setState({
+            quote: {
+              text: json.quote,
+              author: json.author
+            }
+          });
+        }
+      });
+  }
+
+  // define a function to share the quote on twitter
+  handleShareQuote() {
+    // retrieve the text and author from state, include them in the tweet to be shared
+    let text = this.state.quote.text;
+    let author = this.state.quote.author;
+
+    let tweet = `"${text}" - ${author} `;
+    
+    var url = `https://twitter.com/intent/tweet?hashtags=wisdom&text=${tweet}`;
+    window.open(url);
+
+  }
+
+  // in componentDidMount retrieve data from the API to immediately trigger a re-rendering of the component, with the quote
   componentDidMount() {
-      // create a variable for the URL and variables in which to include data from the API call
-      const URL = "https://api.pokemontcg.io/v1/cards?setCode=base1";
-      let cards = [];
-
-      // create a request for the prescribed URL
-      let request = new Request(URL);
-
-      // fetch the return value from the request
-      // return value: the data
-      fetch(request)
-        // format the data to work with a JSON object
-        // argument: data
-        // return value: json object
-        .then((response) => {
-          return response.json();
-        })
-        // retrieve from the JSON object the information required for the project; for now solely the URL of the images found in the cards array
-        // argument: json object
-        // logic: loop through the cards array and push each imageURL property in the variable created for the data 
-        .then((json) => {
-          cards = [...json.cards];
-
-        })
-        // update the state of the application with the retrieved data
-        // this point is better discussed in the following section
-        .then(() => {
-        this.setState({
-          cards: cards
-        });
-      });    
+      this.handleNewQuote();
   }
-  */
   
+  
+  /*
+  render the frame and the controls' panel 
+  - passing to the frame the information needed to display the quote
+  - passing to the controls' panel the methods used to 1) get a new quote and 1) share the quote on twitter
+  */
   render() {
     return (
       <div className="App">
         <QuoteFrame quote={this.state.quote}/>
+        <QuoteControls handleShareQuote={this.handleShareQuote} handleNewQuote={this.handleNewQuote}/>
       </div>
     );
   }
