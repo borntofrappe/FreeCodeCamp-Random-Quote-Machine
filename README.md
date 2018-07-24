@@ -1,3 +1,5 @@
+Link to the working pen right [here](https://codepen.io/borntofrappe/full/yqXOXG/).
+
 **Update**
 
 After some consideration regarding the progress achieved with the repository and the requirements of the test suite set up by @freeCodeCamp, I decided the following:
