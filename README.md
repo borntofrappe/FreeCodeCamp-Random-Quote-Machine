@@ -1,3 +1,5 @@
+Link to the working pen right [here](https://codepen.io/borntofrappe/full/yqXOXG/).
+
 **Update**
 
 After some consideration regarding the progress achieved with the repository and the requirements of the test suite set up by @freeCodeCamp, I decided the following:
@@ -22,25 +24,255 @@ Given these bullet points, an API request is not warranted. The store can simply
 
 This time around, the user stories are considered before-hand, to mold the idea around the requirements set by each point.
 
-- [ ] there exist a wrapper element with `id="quote-box"`;
+- [x] there exist a wrapper element with `id="quote-box"`;
 
-- [ ] in the wrapper, there exist an element with id="text" and an element with `id="author"`;
+- [x] in the wrapper, there exist an element with id="text" and an element with `id="author"`;
 
-- [ ] in the wrapper also, there exist a clickable element with `id="new-quote"` and another clickable element with `id="tweet-quote"`;
+- [x] in the wrapper also, there exist a clickable element with `id="new-quote"` and another clickable element with `id="tweet-quote"`;
 
-- [ ] on first load, the application displays a random quote, with the elements of `#text` and `#author`
+- [x] on first load, the application displays a random quote, with the elements of `#text` and `#author`
 
-- [ ] by clicking on `#new-quote`, the application should detch a new quote in `#text`
+- [x] by clicking on `#new-quote`, the application should fetch a new quote in `#text`
 
-- [ ] by clicking on `#tweet-quote`, the application should allow a share on Twitter. This share is enacted by an `<a>`nchor link element with an `href` attribute including `"twitter.com/intent/tweet"`. 
+- [x] by clicking on `#tweet-quote`, the application should allow a share on Twitter. This share is enacted by an `<a>`nchor link element with an `href` attribute including `"twitter.com/intent/tweet"`. 
 
-- [ ] `#quote-box` should be horizontally centered 
+- [x] `#quote-box` should be horizontally centered 
 
+## React.js
 
+Starting without the functionalities behind the application, to simply render the contents on the page, the following component-structure is included. Beware: the structure eerily replicates the one chosen for the previous, React & SVG effort. What changes is the actual contents of the component. Not SVG syntax, but bording ol' HTML markup. Semantic markup (I've been reading [HTML5 Cookbook](http://shop.oreilly.com/product/0636920016038.do), where I encountered this concept). 
 
+```code
+index.js
+  App.js #quote-box
+  Quote.js rendering #text & #author
+  Buttons.js
+    GetNewQuote.js rendering #new-quote
+    ShareQuote.js rendering #tweet.quote
+```
+
+Hopefully the pseudo-code above is self-explanatory. I started to think about creating a `Button.js` component which is included twice for the tweet and new action, but decided to keep the two split since one requires a `<button>` and the other an `<a>`nchor link element.
+
+**Updated Structure**
+
+In the end the following components create the simple card-layout I had in mind:
+
+```code
+index
+  App 
+    QuoteBox  #quote-box 
+      QuoteBoxText  rendering #text & #author
+
+      QuoteBoxActions 
+        GetNewQuote rendering #new-quote
+        ShareQuote rendering #tweet.quote
+```
+
+Styling files are included for each file except for `GetNewQuote` and `ShareQuote`. Since these share most of their styling options, I decided to specify both of them in the parent container, `QuoteBoxActions`.
+
+Since the CSS stylesheet might start to over-crowd the project's structure, it might be a good idea to separate them in a dedicated folder. Something which a larger project certainly needs to handle.
+
+With the current project, static data is included through React's own state. The next step is the inclusion of Redux.
+
+_Please note_
+
+Apparently `create-react-app` doesn't allow references to a stylesheet occurring outside of the `src` folder. Something to know.
+
+## Redux
+
+First of all, be sure to include `redux` and `react-redux` in your project, either through `npm` or `yarn`. Once the `package.json` references these libraries, it is possible to import the components responsible for Redux's own functionalities. 
+
+**index.js**
+
+Instead of rendering a simple component, wrap `<App/>` in between a `<Provider>`, imported from the `react-redux` library.
+
+This provider requires a `store`, which can be elsewhere defined and hereby imported. This is a JS file responsible for the state of the entire application (more on that later).
+
+```JS
+// import the provide, to wrap the parent component with the logic of the redux store
+import { Provider } from 'react-redux';
+// import the redux store
+import store from './redux/store';
+
+// render the only stateful component wrapped in the redux provider
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>, document.getElementById('root'));
+```
+
+**App.js**
+
+In the stateful component, you can remove the `state` object in favour of Redux's own management. It is here important to bind, or _connect_ if you will, the state of the Redux's store to the context of the application. This feat is achieved through the `connect()` function, from the `react-redux` library.
+
+This function is responsible to _map_ the state and the action creators (read: how redux manages and alters the state) to `props`. From here, the application has access to the state through the `props.` prefix.
+
+Connect itself takes two arguments, normally labeled `mapStateToProps` and `mapDipatchToProps`, which are two functions describing the way the `state` is linked to `props`. It is then immediately called on the component on which this logic needs applying.
+
+```JS
+// include in the App component the state as tracked and managed by redux
+App = connect(mapStateToProps, mapDispatchToProps)(App);
+```
+
+As far as these functions are concerned:
+
+- they take as argument `state` and `dispatch` respectively;
+
+- they return an object which describes the state and the action creators respectively.
+
+_Please note_
+
+In order to map the action creators you need to have them imported in the JS file.
+
+For `mapStateToProps`:
+
+```JS
+// connect the component with the state and action creators defined through the store and redux in general
+const mapStateToProps = (state) => {
+  // when mapping the state, return the desired field, accessible through this.props.field in stateful components
+  return {field: state.field}
+};
+```
+
+For `mapDispatchToProps`:
+
+```JS
+const mapDispatchToProps = (dispatch) => {
+  // when mapping the dispatching function, return the field directing toward the respective action creator and including the required arguments
+  // these are accessible through this.props.fieldAction()
+  return {
+    fieldAction: (argument) => {
+      dispatch(fieldActionCreator(argument))
+    }
+  }
+};
+```
+
+Of course the `state`'s own field and the `dispatch`'s own action creators depend on the values included in the Redux store.
+
+**actionTypes.js**
+
+I like to separate the action types used by the store and defined by the action creators in a separate file. Much like Redux was for this application, this practice is perhaps excessive, but allows me to clearly divvy up some of the complexity behind the library itself.
+
+```JS
+// include the type(s) for the store and action creators
+export const ACTION_TYPE = 'ACTION_TYPE';
+```
+
+Later in the importing files:
+
+```JS
+// import the action type(s)
+import { ACTION_TYPE } from './actionTypes';
+```
+
+**actionCreators.js**
+
+Action creators are functions which return actions. Actions are objects, with a mandatory `type` and optional, additional data, to be included in the store's logic.
+
+The store handles these functions through the mentioned `type`.
+
+```JS
+export const actionCreator = (data) => {
+  return {
+    type: ACTION_TYPE
+    data
+  };
+}
+```
+
+_Please note_
+
+Through `data`, the object returns a field of `data` with a value of the argument passed in the function. If the two match in name, there's no need to assign the value, like so:
+
+```JS
+data: data
+```
+
+**store.js**
+
+The store is responsible for 1) initialize the state, 1) create a reducer to handle actions and 1) create the store.
+
+The first two steps are actually instrumental in the final responsibility, but one thing at a time. 
+
+_createStore_
+
+The store is created through the `createStore` function, passing as argument the reducer. The function itself is imported from `redux`.
+
+```JS
+const store = createStore(reducer);
+```
+
+_reducer_
+
+The reducer is a function which accepts as argument the state of the application and a possible action. This action is the exact action possibly dispatched by the actionCreator(s) and the reducer defines here how to handle such a dispatch.
+
+```JS
+const reducer = (state = initialState, action) => {
+
+};
+```
+
+In the block created by the function, the reducer can check for the `type` of the action and act accordingly (for instance, updating the state). 
+
+```JS
+const reducer = (state = initialState, action) => {
+  if(action.type === ACTION_TYPE) {
+    // do something 
+    // return state
+  }
+  // REMEMBER to always return state
+  // altered by the action or as-is, you always need to return state
+  return state;
+};
+```
+
+_initialState_
+
+In the reducer, you can pass the state and initialize it to a default value. This is an object much alike the state object which gets defined in a React's stateful component. Nothing fancier.
+
+**Wrapping-up**
+
+Although Redux does include some complexity, it follows a certain logic, it its own way:
+
+In Redux-land
+
+- create a store
+- define how the store introduces and manages the state
+- define actions to modify the state in the manner described in the previous point
+
+In React-land:
+
+- include the store wrapping a component around the overarching object
+- map the state and the actions to the `props` value of the component which need to access state and modify it respectively.
+
+## Random Color
+
+In the store, a function is defined to return a string for the color of the aplcation. The string's characters are randomly selected from a pool of 16 choices. 
+
+```JS
+function randomSix() {
+  let color = "";
+  for(let i = 0; i < 6; i++) {
+    let randomSixteen = Math.floor(Math.random()*16);
+    color += randomSixteen.toString(16);
+  }
+  return color;
+}
+```
+
+This function can be included in the store to include a random color.
+
+```JS
+const initialState = {
+  color: randomSix(),
+  counter: 0
+}
+```
 
 ---
 ---
+
 
 # Previous Effort
 

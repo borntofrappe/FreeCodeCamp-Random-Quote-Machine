@@ -1,0 +1,7 @@
+/* include white space around the quote box, set display to inline block as the headers are a block element by default (and would occupy the entire width) */
+.QuoteBox {
+  padding: 10vh 12vw;
+  display: inline-block;
+  /* background of the chosen color */
+  background: var(--color-card);  
+}

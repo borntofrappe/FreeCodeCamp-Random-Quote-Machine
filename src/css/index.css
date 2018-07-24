@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css?family=Ubuntu+Mono");
+
+/* 
+include the colors and fonts used throughout the project 
+color-theme is updatd as the page loads and as the button is clicked, to match the random color
+*/
+:root {
+  --color-theme: #9A9AFF;
+  --color-card: #ffffff;
+  --font-txt: 'Ubuntu Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  /* have the background of the application and the text of the quote match in color
+  the text is made visible by changing the color of the quote's background
+  */
+  background: var(--color-theme);
+  color: var(--color-theme);
+  font-family: var(--font-txt);
+}
