@@ -44,19 +44,18 @@ This time around, the user stories are considered before-hand, to mold the idea 
 
 **Note of the previous effort**
 
-As it turned out, checking the user stories first might have benefited me a lot... It seems that the current structure of the project is unfit to fulfill all of them. Most of them actually.
+As it turned out, checking the user stories for the @freeCodeCamp curriculum might have benefited me a lot... It seems that the current structure of the project is unfit to fulfill all of them. Most of them actually.
 
-In the morning, I will judge on the feasibility of this task, and perhaps on the necessity of creating yet another random quote machine, this time around with simple text elements and less inventive markup.
+As it is obvious by the previous update, I decided to keep the project as a nice experimental side-story, and keep the notes as a teaching documentation.
 
 Certainly nothing is lost. It has been an extremely valuable experience in practicing React, SVG, API calls, to produce something neat.
 
 Link to the working pen right [here](https://codepen.io/borntofrappe/full/PBmzGL/).
 
----
-
-To earn the **Front End Libraries** certification for the @freeCodeCamp curriculum, I build with this project a _Random Quote Machine_, using the **React.js** library and **SVG** syntax for the overall design of the page.
 
 ## Preface
+
+To earn the **Front End Libraries** certification for the @freeCodeCamp curriculum, I build with this project a _Random Quote Machine_, using the **React.js** library and **SVG** syntax for the overall design of the page.
 
 I already built such an application before the freeCodeCamp curriculum was revisited with additional certifications and more strict testing. In that instance, I did not use any external library, but managed to create a rather [neat application](https://codepen.io/borntofrappe/pen/VQYmpJ).
 
@@ -69,6 +68,8 @@ With a [previous project](https://codepen.io/borntofrappe/pen/ejvdpj), I created
 Since the design is already accounted for, and you can check the mentioned project [here on github](https://github.com/borntofrappe/Practice-Front-End-Web-Development/tree/master/SVG%20Frame%20and%20Texture), I therefore use the rest of this README to document my technical challenges and overall web development process.
 
 ## User Stories
+
+<!-- Cue sad music -->
 
 To complete the testing set up by @freeCodeCamp, the application needs to fulfill several user stories.
 
