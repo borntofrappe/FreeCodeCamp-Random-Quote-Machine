@@ -36,6 +36,45 @@ This time around, the user stories are considered before-hand, to mold the idea 
 
 - [ ] `#quote-box` should be horizontally centered 
 
+## React.js
+
+Starting without the functionalities behind the application, to simply render the contents on the page, the following component-structure is included. Beware: the structure eerily replicates the one chosen for the previous, React & SVG effort. What changes is the actual contents of the component. Not SVG syntax, but bording ol' HTML markup. Semantic markup (I've been reading [HTML5 Cookbook](http://shop.oreilly.com/product/0636920016038.do), where I encountered this concept). 
+
+```code
+index.js
+  App.js #quote-box
+  Quote.js rendering #text & #author
+  Buttons.js
+    GetNewQuote.js rendering #new-quote
+    ShareQuote.js rendering #tweet.quote
+```
+
+Hopefully the pseudo-code above is self-explanatory. I started to think about creating a `Button.js` component which is included twice for the tweet and new action, but decided to keep the two split since one requires a `<button>` and the other an `<a>`nchor link element.
+
+**Updated Structure**
+
+In the end the following components create the simple card-layout I had in mind:
+
+```code
+index
+  App 
+    QuoteBox  #quote-box 
+      QuoteBoxText  rendering #text & #author
+
+      QuoteBoxActions 
+        GetNewQuote rendering #new-quote
+        ShareQuote rendering #tweet.quote
+```
+
+Styling files are included for each file except for `GetNewQuote` and `ShareQuote`. Since these share most of their styling options, I decided to specify both of them in the parent container, `QuoteBoxActions`.
+
+Since the CSS stylesheet might start to over-crowd the project's structure, it might be a good idea to separate them in a dedicated folder. Something which a larger project certainly needs to handle.
+
+With the current project, static data is included through React's own state. The next step is the inclusion of Redux.
+
+_Please note_
+
+Apparently `create-react-app` doesn't allow references to a stylesheet occurring outside of the `src` folder. Something to know.
 
 
 

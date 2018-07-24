@@ -1,0 +1,7 @@
+/* center the QuoteBox in the middle of the page */
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}

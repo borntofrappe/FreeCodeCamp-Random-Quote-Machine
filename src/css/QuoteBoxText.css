@@ -1,0 +1,15 @@
+/* center the main header, while aligning the sub header to the right */
+.QuoteBoxText {
+  /* visually distance the text elements from the app's functionalities */
+  margin: 1rem 0 3rem;
+
+}
+.QuoteBoxText #text {
+  font-size: calc(2rem + 1vw);
+  text-align: center;
+}
+.QuoteBoxText #author {
+  font-size: 0.9rem;
+  text-align: right;
+  text-transform: lowercase;
+}

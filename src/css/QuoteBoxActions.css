@@ -1,0 +1,35 @@
+/* center the actions horizontally in #quote-box */
+.QuoteBoxActions {
+  display: flex;
+  justify-content: space-around;
+}
+
+/* size the components to have the same weight  */
+.ShareQuote, .GetNewQuote {
+  background: none;
+  border: none;
+  /* margin to slightly distance the SVG from one another */
+  margin: 0 1rem;
+  /* transition for the hover, focus and active states */
+  transition: all 0.2s ease-out;
+}
+.ShareQuote svg, .GetNewQuote svg {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+/* on hover and on focus increase the brightness of the svg */
+.ShareQuote:hover, .GetNewQuote:hover, .ShareQuote:focus, .GetNewQuote:focus {
+  filter: brightness(110%);
+}
+/* when active, increase the scale */
+.ShareQuote:active, .GetNewQuote:active {
+  transform: scale(1.2);
+}
+
+/* for smaller viewports, resize the svg as to avoid excessive visual weight */
+@media (max-width: 700px) {
+  .ShareQuote svg, .GetNewQuote svg {
+    width: 2rem;
+    height: 2rem;
+  }
+}

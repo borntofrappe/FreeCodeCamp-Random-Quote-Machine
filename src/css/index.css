@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300");
+
+/* include the colors and fonts used throughout the project */
+:root {
+  --color-bg: #9A9AFF;
+  --color-card: #ffffff;
+  --font-txt: 'Open Sans', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  /* have the background of the application and the text of the quote match in color
+  the text is made visible by changing the color of the quote's background
+
+  color to be altered to get a new quote
+  */
+  background: var(--color-bg);
+  color: var(--color-bg);
+  font-family: var(--font-txt);
+}
