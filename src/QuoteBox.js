@@ -7,8 +7,8 @@ import QuoteBoxActions from './QuoteBoxActions';
 const QuoteBox = (props) => {
   return(
     <div className="QuoteBox" id="quote-box">
-      <QuoteBoxText color={props.color} number={props.number}/>
-      <QuoteBoxActions/>
+      <QuoteBoxText color={props.color} counter={props.counter}/>
+      <QuoteBoxActions color={props.color} counter={props.counter} handleButton={props.handleButton}/>
     </div>
   );
 }

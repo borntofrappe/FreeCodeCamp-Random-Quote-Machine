@@ -22,19 +22,19 @@ Given these bullet points, an API request is not warranted. The store can simply
 
 This time around, the user stories are considered before-hand, to mold the idea around the requirements set by each point.
 
-- [ ] there exist a wrapper element with `id="quote-box"`;
+- [x] there exist a wrapper element with `id="quote-box"`;
 
-- [ ] in the wrapper, there exist an element with id="text" and an element with `id="author"`;
+- [x] in the wrapper, there exist an element with id="text" and an element with `id="author"`;
 
-- [ ] in the wrapper also, there exist a clickable element with `id="new-quote"` and another clickable element with `id="tweet-quote"`;
+- [x] in the wrapper also, there exist a clickable element with `id="new-quote"` and another clickable element with `id="tweet-quote"`;
 
-- [ ] on first load, the application displays a random quote, with the elements of `#text` and `#author`
+- [x] on first load, the application displays a random quote, with the elements of `#text` and `#author`
 
-- [ ] by clicking on `#new-quote`, the application should detch a new quote in `#text`
+- [x] by clicking on `#new-quote`, the application should fetch a new quote in `#text`
 
-- [ ] by clicking on `#tweet-quote`, the application should allow a share on Twitter. This share is enacted by an `<a>`nchor link element with an `href` attribute including `"twitter.com/intent/tweet"`. 
+- [x] by clicking on `#tweet-quote`, the application should allow a share on Twitter. This share is enacted by an `<a>`nchor link element with an `href` attribute including `"twitter.com/intent/tweet"`. 
 
-- [ ] `#quote-box` should be horizontally centered 
+- [x] `#quote-box` should be horizontally centered 
 
 ## React.js
 
@@ -244,6 +244,29 @@ In React-land:
 - include the store wrapping a component around the overarching object
 - map the state and the actions to the `props` value of the component which need to access state and modify it respectively.
 
+## Random Color
+
+In the store, a function is defined to return a string for the color of the aplcation. The string's characters are randomly selected from a pool of 16 choices. 
+
+```JS
+function randomSix() {
+  let color = "";
+  for(let i = 0; i < 6; i++) {
+    let randomSixteen = Math.floor(Math.random()*16);
+    color += randomSixteen.toString(16);
+  }
+  return color;
+}
+```
+
+This function can be included in the store to include a random color.
+
+```JS
+const initialState = {
+  color: randomSix(),
+  counter: 0
+}
+```
 
 ---
 ---

@@ -5,8 +5,10 @@
 
 }
 .QuoteBoxText #text {
-  font-size: calc(2rem + 1vw);
+  font-size: calc(2.5rem + 1vw);
   text-align: center;
+  letter-spacing: 0.15rem;
+  text-transform: uppercase;
 }
 .QuoteBoxText #author {
   font-size: 0.9rem;

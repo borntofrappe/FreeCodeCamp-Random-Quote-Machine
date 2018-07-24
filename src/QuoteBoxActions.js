@@ -1,14 +1,14 @@
 import React from 'react';
 import './css/QuoteBoxActions.css';
 import ShareQuote from './ShareQuote';
-import GetNewQuote from './GetNewQuote';
+import GetNewColor from './GetNewColor';
 
-// in the QuoteBoxActions component render a button responsible for the getNewQuote action and an anchor link responsible for the shareQuote action
+// in the QuoteBoxActions component render a button responsible for the GetNewColor action and an anchor link responsible for the shareQuote action
 const QuoteBoxActions = (props) => {
   return(
     <div className="QuoteBoxActions">
-      <ShareQuote />
-      <GetNewQuote />
+      <ShareQuote color={props.color} counter={props.counter}/>
+      <GetNewColor handleButton={props.handleButton}/>
     </div>
   );
 }

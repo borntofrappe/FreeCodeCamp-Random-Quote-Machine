@@ -5,7 +5,7 @@
 }
 
 /* size the components to have the same weight  */
-.ShareQuote, .GetNewQuote {
+.ShareQuote, .GetNewColor {
   background: none;
   border: none;
   /* margin to slightly distance the SVG from one another */
@@ -13,22 +13,23 @@
   /* transition for the hover, focus and active states */
   transition: all 0.2s ease-out;
 }
-.ShareQuote svg, .GetNewQuote svg {
+.ShareQuote svg, .GetNewColor svg {
   width: 2.75rem;
   height: 2.75rem;
+  fill: var(--color-theme);
 }
 /* on hover and on focus increase the brightness of the svg */
-.ShareQuote:hover, .GetNewQuote:hover, .ShareQuote:focus, .GetNewQuote:focus {
+.ShareQuote:hover, .GetNewColor:hover, .ShareQuote:focus, .GetNewColor:focus {
   filter: brightness(110%);
 }
 /* when active, increase the scale */
-.ShareQuote:active, .GetNewQuote:active {
+.ShareQuote:active, .GetNewColor:active {
   transform: scale(1.2);
 }
 
 /* for smaller viewports, resize the svg as to avoid excessive visual weight */
 @media (max-width: 700px) {
-  .ShareQuote svg, .GetNewQuote svg {
+  .ShareQuote svg, .GetNewColor svg {
     width: 2rem;
     height: 2rem;
   }
