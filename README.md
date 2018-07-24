@@ -2,7 +2,7 @@
 
 After some consideration regarding the progress achieved with the repository and the requirements of the test suite set up by @freeCodeCamp, I decided the following:
 
-- the random quote machine is considered as a finished project. An effort experimental in nature, teaching in terms of React, SVG, and a simple API call. I will leave the notes on such project in the README, in a section labeled "# Previous Effort", as they document a really neat achievement. // TODO: re-write the notes in light of this decision
+- the random quote machine is considered as a finished project. An effort experimental in nature, teaching in terms of React, SVG, and a simple API call. I will leave the notes on such project in the README, in a section labeled "# Previous Effort", as they document a really neat achievement.
 
 - for the "Front End Libraries" certification, a new React-based project is created. Since I do not want to simply replicate my efforts with little to no modification, I plan to here include additional technologies and to create something slightly different.
 
@@ -37,6 +37,8 @@ This time around, the user stories are considered before-hand, to mold the idea 
 - [ ] `#quote-box` should be horizontally centered 
 
 
+
+
 ---
 ---
 
@@ -44,9 +46,9 @@ This time around, the user stories are considered before-hand, to mold the idea 
 
 **Note of the previous effort**
 
-As it turned out, checking the user stories for the @freeCodeCamp curriculum might have benefited me a lot... It seems that the current structure of the project is unfit to fulfill all of them. Most of them actually.
+As it turned out, checking the user stories for the @freeCodeCamp curriculum might have benefited me a lot... It seems that the current structure of the project is unfit to fulfill a few of them. Most of them actually.
 
-As it is obvious by the previous update, I decided to keep the project as a nice experimental side-story, and keep the notes as a teaching documentation.
+As it is obvious by the previous update, I decided to keep the project as a nice experimental side-story, and keep the following notes as a teaching documentation.
 
 Certainly nothing is lost. It has been an extremely valuable experience in practicing React, SVG, API calls, to produce something neat.
 
