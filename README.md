@@ -76,10 +76,178 @@ _Please note_
 
 Apparently `create-react-app` doesn't allow references to a stylesheet occurring outside of the `src` folder. Something to know.
 
+## Redux
+
+First of all, be sure to include `redux` and `react-redux` in your project, either through `npm` or `yarn`. Once the `package.json` references these libraries, it is possible to import the components responsible for Redux's own functionalities. 
+
+**index.js**
+
+Instead of rendering a simple component, wrap `<App/>` in between a `<Provider>`, imported from the `react-redux` library.
+
+This provider requires a `store`, which can be elsewhere defined and hereby imported. This is a JS file responsible for the state of the entire application (more on that later).
+
+```JS
+// import the provide, to wrap the parent component with the logic of the redux store
+import { Provider } from 'react-redux';
+// import the redux store
+import store from './redux/store';
+
+// render the only stateful component wrapped in the redux provider
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>, document.getElementById('root'));
+```
+
+**App.js**
+
+In the stateful component, you can remove the `state` object in favour of Redux's own management. It is here important to bind, or _connect_ if you will, the state of the Redux's store to the context of the application. This feat is achieved through the `connect()` function, from the `react-redux` library.
+
+This function is responsible to _map_ the state and the action creators (read: how redux manages and alters the state) to `props`. From here, the application has access to the state through the `props.` prefix.
+
+Connect itself takes two arguments, normally labeled `mapStateToProps` and `mapDipatchToProps`, which are two functions describing the way the `state` is linked to `props`. It is then immediately called on the component on which this logic needs applying.
+
+```JS
+// include in the App component the state as tracked and managed by redux
+App = connect(mapStateToProps, mapDispatchToProps)(App);
+```
+
+As far as these functions are concerned:
+
+- they take as argument `state` and `dispatch` respectively;
+
+- they return an object which describes the state and the action creators respectively.
+
+_Please note_
+
+In order to map the action creators you need to have them imported in the JS file.
+
+For `mapStateToProps`:
+
+```JS
+// connect the component with the state and action creators defined through the store and redux in general
+const mapStateToProps = (state) => {
+  // when mapping the state, return the desired field, accessible through this.props.field in stateful components
+  return {field: state.field}
+};
+```
+
+For `mapDispatchToProps`:
+
+```JS
+const mapDispatchToProps = (dispatch) => {
+  // when mapping the dispatching function, return the field directing toward the respective action creator and including the required arguments
+  // these are accessible through this.props.fieldAction()
+  return {
+    fieldAction: (argument) => {
+      dispatch(fieldActionCreator(argument))
+    }
+  }
+};
+```
+
+Of course the `state`'s own field and the `dispatch`'s own action creators depend on the values included in the Redux store.
+
+**actionTypes.js**
+
+I like to separate the action types used by the store and defined by the action creators in a separate file. Much like Redux was for this application, this practice is perhaps excessive, but allows me to clearly divvy up some of the complexity behind the library itself.
+
+```JS
+// include the type(s) for the store and action creators
+export const ACTION_TYPE = 'ACTION_TYPE';
+```
+
+Later in the importing files:
+
+```JS
+// import the action type(s)
+import { ACTION_TYPE } from './actionTypes';
+```
+
+**actionCreators.js**
+
+Action creators are functions which return actions. Actions are objects, with a mandatory `type` and optional, additional data, to be included in the store's logic.
+
+The store handles these functions through the mentioned `type`.
+
+```JS
+export const actionCreator = (data) => {
+  return {
+    type: ACTION_TYPE
+    data
+  };
+}
+```
+
+_Please note_
+
+Through `data`, the object returns a field of `data` with a value of the argument passed in the function. If the two match in name, there's no need to assign the value, like so:
+
+```JS
+data: data
+```
+
+**store.js**
+
+The store is responsible for 1) initialize the state, 1) create a reducer to handle actions and 1) create the store.
+
+The first two steps are actually instrumental in the final responsibility, but one thing at a time. 
+
+_createStore_
+
+The store is created through the `createStore` function, passing as argument the reducer. The function itself is imported from `redux`.
+
+```JS
+const store = createStore(reducer);
+```
+
+_reducer_
+
+The reducer is a function which accepts as argument the state of the application and a possible action. This action is the exact action possibly dispatched by the actionCreator(s) and the reducer defines here how to handle such a dispatch.
+
+```JS
+const reducer = (state = initialState, action) => {
+
+};
+```
+
+In the block created by the function, the reducer can check for the `type` of the action and act accordingly (for instance, updating the state). 
+
+```JS
+const reducer = (state = initialState, action) => {
+  if(action.type === ACTION_TYPE) {
+    // do something 
+    // return state
+  }
+  // REMEMBER to always return state
+  // altered by the action or as-is, you always need to return state
+  return state;
+};
+```
+
+_initialState_
+
+In the reducer, you can pass the state and initialize it to a default value. This is an object much alike the state object which gets defined in a React's stateful component. Nothing fancier.
+
+**Wrapping-up**
+
+Although Redux does include some complexity, it follows a certain logic, it its own way:
+
+In Redux-land
+
+- create a store
+- define how the store introduces and manages the state
+- define actions to modify the state in the manner described in the previous point
+
+In React-land:
+
+- include the store wrapping a component around the overarching object
+- map the state and the actions to the `props` value of the component which need to access state and modify it respectively.
 
 
 ---
 ---
+
 
 # Previous Effort
 
