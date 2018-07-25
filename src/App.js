@@ -22,12 +22,18 @@ class App extends Component {
   }
 
   // define the function which fetches the random color, by dispatching the action creator
-  handleButton() {
-    this.props.newColor();
-    // update the CSS variable to have the theme color match the new color
+  // ISSUE: without some form of asynchronous logic, the function fires off the dispatching action and updates the theme color making use of the old choice
+  // async await can be included to "pause" the logic until the action is fulfilled and have the subsequent logic reason with the expected values
+  /*
+  1. place async before the function needing asynchronous logic
+  1. place await in front of the function which needs a-waiting
+  */
+  async handleButton() {
+    await this.props.newColor();
     const root = document.querySelector(":root");
     root.style.setProperty("--color-theme", `#${this.props.color}`);
   }
+  
   render() {
     // render a single component to include the text and the button/anchor link elements for the app's functionalities 
     return (
