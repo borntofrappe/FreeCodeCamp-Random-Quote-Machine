@@ -270,8 +270,46 @@ const initialState = {
 }
 ```
 
+## Async Await
+
+While testing the application, one monolithic issue emerged from the application: the color displayed on the screen was **not** the color showcased by the background, text and icons.
+
+After a bit of analysis, I isolated the issue in the way I was updating the color, in the following function.
+
+```JS
+handleButton() {
+    this.props.newColor();
+    // update the CSS variable to have the theme color match the new color
+    const root = document.querySelector(":root");
+    root.style.setProperty("--color-theme", `#${this.props.color}`);
+  }
+```
+
+My reasoning was sound: pick a new color, select the root element and then update the CSS variables with the color held by the state. Unfortunately, I did not account for the nature of JS. I did not account for synchronous/asynchronous code.
+
+Basically, the function dispatches the action and without waiting for an update in the store, it updates the CSS variable with the existing value found in the state.
+
+One way to include asynchronous logic, and therefore have the latter portion of the function "fire off" after the action is dispatched and the store is updated, is to use _async await_. The previous snippet can be readily fixed thusly:
+
+```JS
+async handleButton() {
+  await this.props.newColor();
+  const root = document.querySelector(":root");
+  root.style.setProperty("--color-theme", `#${this.props.color}`);
+}
+```
+
+In the simple use case for the project:
+
+- place _async_ before the function requiring asynchronous logic;
+
+- place _await_ before the function which needs to be a-waited.
+
+Simple as that. What follows the await-ed function will only be run _after_ said function has completed its task. (I realize I need much more practice and research on the topic, but these notes are sufficient enough to motivate the updated code).
+
 ---
 ---
+
 
 
 # Previous Effort
